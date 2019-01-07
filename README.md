@@ -3,6 +3,7 @@
 github.io  
 https://nagaohiroki.github.io/Block/
 
+![icon](icon.png)
 
 遊び方
 ---
