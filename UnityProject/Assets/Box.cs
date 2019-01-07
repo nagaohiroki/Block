@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 using System.Collections.Generic;
 public class Box : MonoBehaviour
 {
@@ -19,31 +20,6 @@ public class Box : MonoBehaviour
 		Vector2Int.left,
 		Vector2Int.right,
 	};
-	void Reset()
-	{
-		mIsClear = false;
-		if(mTelop != null)
-		{
-			mTelop.gameObject.SetActive(false);
-		}
-		mBoxList = new Dictionary<Vector2Int, Block>();
-		const float margin = 2.0f;
-		for(int y = 0; y < mSize.y; ++y)
-		{
-			for(int x = 0; x < mSize.x; ++x)
-			{
-				var box = Instantiate(mBlock);
-				box.gameObject.SetActive(true);
-				box.Pos = new Vector2Int(x, y);
-				box.transform.SetParent(transform);
-				var pos = box.transform.position;
-				pos.x = x * margin - ((mSize.x - 1) * margin * 0.5f);
-				pos.z = y * margin - ((mSize.y - 1) * margin * 0.5f);
-				box.transform.position = pos;
-				mBoxList.Add(box.Pos, box);
-			}
-		}
-	}
 	bool CheckClear()
 	{
 		foreach(var item in mBoxList)
@@ -77,13 +53,35 @@ public class Box : MonoBehaviour
 	}
 	void Start()
 	{
-		Reset();
+		mIsClear = false;
+		if(mTelop != null)
+		{
+			mTelop.gameObject.SetActive(false);
+		}
+		mBoxList = new Dictionary<Vector2Int, Block>();
+		const float margin = 2.0f;
+		for(int y = 0; y < mSize.y; ++y)
+		{
+			for(int x = 0; x < mSize.x; ++x)
+			{
+				var box = Instantiate(mBlock);
+				box.gameObject.SetActive(true);
+				box.Pos = new Vector2Int(x, y);
+				box.transform.SetParent(transform);
+				var pos = box.transform.position;
+				pos.x = x * margin - ((mSize.x - 1) * margin * 0.5f);
+				pos.z = y * margin - ((mSize.y - 1) * margin * 0.5f);
+				box.transform.position = pos;
+				mBoxList.Add(box.Pos, box);
+			}
+		}
 	}
 	void Update()
 	{
 		if(Input.GetKeyDown(KeyCode.Space))
 		{
-			Reset();
+			SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+			return;
 		}
 		if(mIsClear)
 		{
@@ -111,10 +109,8 @@ public class Box : MonoBehaviour
 			}
 		}
 	}
-
 	void AutoPlayer(Vector2Int inPos)
 	{
 		ChangeStatus(mBoxList[inPos]);
 	}
-
 }
