@@ -87,10 +87,6 @@ public class Box : MonoBehaviour
 		{
 			return;
 		}
-		if(Input.GetKeyDown(KeyCode.A))
-		{
-			//AutoPlayer();
-		}
 		if(Input.GetButtonDown("Fire1"))
 		{
 			var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -108,9 +104,5 @@ public class Box : MonoBehaviour
 				}
 			}
 		}
-	}
-	void AutoPlayer(Vector2Int inPos)
-	{
-		ChangeStatus(mBoxList[inPos]);
 	}
 }
