@@ -1,5 +1,5 @@
 os: osx
 language: python
 python:
-  - "3.7"
+  - "3.6"
 scriptt: python3 ./test.py
